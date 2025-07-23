@@ -1,0 +1,74 @@
+.footer-section {
+    background-color: #232f3e;
+    color: white;
+    font-size: 14px;
+  }
+  
+  .footer-section a {
+    color: #ddd;
+    text-decoration: none;
+  }
+  
+  .footer-section a:hover {
+    text-decoration: underline;
+  }
+  
+  .amazon-logo-footer {
+    width: 100px;
+    object-fit: contain;
+    margin-bottom: 10px;
+  }
+  
+  .footer-links ul {
+    list-style: none;
+    padding-left: 0;
+  }
+  
+  .footer-links ul li {
+    margin-bottom: 6px;
+  }
+  
+  .footer-bottom {
+    background-color: #131921;
+  }
+  
+  .footer-extras {
+    background-color: #232f3e;
+    color: #ccc;
+  }
+  
+  .back-to-top {
+    background-color: #37475a;
+  }
+  
+  .back-to-top a {
+    color: #fff;
+    font-weight: bold;
+  }
+
+
+    /* Responsive Text Alignment */
+    @media (max-width: 768px) {
+        .footer-section .text-start {
+          text-align: center !important;
+        }
+      
+        .footer-bottom .language-selector,
+        .footer-bottom .country-selector {
+          display: block;
+          margin-top: 10px;
+        }
+      
+        .footer-extras .col-md-3 {
+          flex: 0 0 50%;
+          max-width: 50%;
+        }
+      }
+      
+      @media (max-width: 576px) {
+        .footer-extras .col-md-3 {
+          flex: 0 0 100%;
+          max-width: 100%;
+          text-align: center;
+        }
+      }
