@@ -1,0 +1,33 @@
+/* Navbar.css */
+.amazon-logo {
+    width: 100px;
+    object-fit: contain;
+  }
+  
+  .search-bar .category-select {
+    max-width: 120px;
+    border-radius: 0;
+  }
+  
+  .search-bar input {
+    flex: 1;
+    min-width: 100px;
+    border-radius: 0;
+  }
+  
+  .search-bar button {
+    border-radius: 0;
+  }
+  
+  /* Small screen tweaks */
+  @media (max-width: 768px) {
+    .search-bar {
+      width: 100%;
+      margin-top: 10px;
+    }
+  
+    .location {
+      display: none !important;
+    }
+  }
+  
