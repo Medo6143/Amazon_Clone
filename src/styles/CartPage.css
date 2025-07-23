@@ -1,0 +1,11 @@
+.cart-page .cart-title       { font-size: 28px; font-weight: 400; }
+.cart-page .qty-dropdown     { width: 100px; }
+
+/* Checkout sidebar */
+.checkout-box               { background-color:#f3f3f3; }
+.checkout-box p             { font-size:15px; }
+
+/* Remove Bootstrap button padding on link buttons */
+button.btn-link             { padding:0; color:#007185; }
+button.btn-link:hover       { color:#C7511F; text-decoration:underline; }
+
