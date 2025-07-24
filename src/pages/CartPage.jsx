@@ -1,4 +1,3 @@
-// src/components/CartPage/CartPage.jsx
 import { useState } from 'react';
 import { Container, Row, Col, Button, Form } from 'react-bootstrap';
 import CartItem from '../components/ui/CartItem';
