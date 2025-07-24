@@ -1,44 +1,35 @@
-import { useState } from 'react';
 import { Container, Row, Col, Button, Form } from 'react-bootstrap';
 import CartItem from '../components/ui/CartItem';
+import { useCart } from '../hooks/useproductCart';
 import '../styles/CartPage.css';
 
-// temporary mock data
-const initialCart = [
-  {
-    id: 1,
-    title: 'Echo Dot (5th Gen)',
-    price: 49.99,
-    qty: 2,
-    image: 'https://via.placeholder.com/150',
-  },
-  {
-    id: 2,
-    title: 'Fire TV Stick 4K',
-    price: 39.99,
-    qty: 1,
-    image: 'https://via.placeholder.com/150',
-  },
-];
 
 export default function CartPage() {
-  const [cart, setCart] = useState(initialCart);
+  const {
+    cartItems,
+    totalQuantity,
+    totalPrice,
+    addItemToCart,
+    decreaseItemQuantity,
+    removeItem,
+  } = useCart();
 
-  // helpers
-  const updateQty = (id, qty) =>
-    setCart(c =>
-      c.map(item => (item.id === id ? { ...item, qty } : item))
-    );
+  const changeQty = (id, newQty) => {
+    const item = cartItems.find(i => i.id === id);
+    if (!item) return;
 
-  const removeItem = id => setCart(c => c.filter(item => item.id !== id));
+    const diff = newQty - item.quantity;
 
-  const saveForLater = id => {
-    // stub; implement later
-    alert(`Saved item ${id} for later`);
+    if (diff > 0) addItemToCart(item, diff);
+
+    // decrease — remove 1 unit per dispatch (slice already handles “if qty==1 remove row”)
+    if (diff < 0) {
+      for (let i = 0; i < Math.abs(diff); i++) decreaseItemQuantity(id);
+    }
   };
 
-  const subtotal = cart.reduce((t, i) => t + i.price * i.qty, 0);
-  const items    = cart.reduce((t, i) => t + i.qty, 0);
+  const saveForLater = id =>
+    alert(`Saved item ${id} for later (stub for future wishlist feature)`);
 
   return (
     <Container className="cart-page my-4">
@@ -46,34 +37,46 @@ export default function CartPage() {
         {/* LEFT — items list */}
         <Col lg={8}>
           <h4 className="cart-title">Shopping Cart</h4>
+
+          {/* Mobile subtotal banner */}
           <p className="text-end d-lg-none">
-            Subtotal ({items} items): <span className="fw-bold">${subtotal.toFixed(2)}</span>
+            Subtotal ({totalQuantity} items):
+            <span className="fw-bold"> ${totalPrice.toFixed(2)}</span>
           </p>
+
           <hr />
-          {cart.map(item => (
+
+          {cartItems.length === 0 && (
+            <p className="py-5 text-center">Your cart is empty.</p>
+          )}
+
+          {cartItems.map(item => (
             <CartItem
               key={item.id}
-              item={item}
-              onQtyChange={updateQty}
+              /* CartItem still expects `qty`, so rename on the fly */
+              item={{ ...item, qty: item.quantity }}
+              onQtyChange={changeQty}
               onRemove={removeItem}
               onSaveLater={saveForLater}
             />
           ))}
         </Col>
 
-        {/* RIGHT — checkout box */}
+        {/* RIGHT — checkout sidebar */}
         <Col lg={4}>
           <div className="checkout-box p-3 border rounded">
             <p className="mb-2">
-              Subtotal ({items} items):
-              <span className="fw-bold"> ${subtotal.toFixed(2)}</span>
+              Subtotal ({totalQuantity} items):
+              <span className="fw-bold"> ${totalPrice.toFixed(2)}</span>
             </p>
+
             <Form.Check
               type="checkbox"
               id="gift"
               label="This order contains a gift"
               className="small mb-3"
             />
+
             <Button variant="warning" className="w-100">
               Proceed to Checkout
             </Button>

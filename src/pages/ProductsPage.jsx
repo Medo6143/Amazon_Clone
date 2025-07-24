@@ -5,6 +5,7 @@ import { faStar, faStarHalfAlt, faShoppingCart, faSearch, faFilter } from '@fort
 import { useNavigate } from 'react-router-dom';
 import ProductCardSkeleton from '../components/ui/ProductCardSkeleton';
 import { useProducts } from '../hooks/useProducts';
+import { useCart } from '../hooks/useproductCart';
 
 const ProductsPage = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -14,15 +15,15 @@ const ProductsPage = () => {
   const [selectedPrice, setSelectedPrice] = useState('all');
   const navigate = useNavigate();
   const { products, loading, error } = useProducts();
-
+  const { addItemToCart } = useCart();
   useEffect(() => {
     if (error) console.error(error);
   }, [error]);
 
   // Filter products based on search term, category and price
   const filteredProducts = products.filter(product => {
-    const matchesSearch = product.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
-                         product.description.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesSearch = product.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      product.description.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCategory = selectedCategory === 'all' || product.category === selectedCategory;
     const matchesPrice = selectedPrice === 'all' || (selectedPrice === 'under30' && product.price < 30) || (selectedPrice === 'over30' && product.price >= 30);
     return matchesSearch && matchesCategory && matchesPrice;
@@ -41,20 +42,20 @@ const ProductsPage = () => {
     const stars = [];
     const fullStars = Math.floor(rating);
     const hasHalfStar = rating % 1 >= 0.5;
-    
+
     for (let i = 0; i < fullStars; i++) {
       stars.push(<FontAwesomeIcon key={`full-${i}`} icon={faStar} className="text-warning" />);
     }
-    
+
     if (hasHalfStar) {
       stars.push(<FontAwesomeIcon key="half" icon={faStarHalfAlt} className="text-warning" />);
     }
-    
+
     const emptyStars = 5 - stars.length;
     for (let i = 0; i < emptyStars; i++) {
       stars.push(<FontAwesomeIcon key={`empty-${i}`} icon={faStar} className="text-secondary" />);
     }
-    
+
     return stars;
   };
 
@@ -93,7 +94,7 @@ const ProductsPage = () => {
           </div>
         </Col>
         <Col md={6} className="d-flex justify-content-end">
-          <Form.Select 
+          <Form.Select
             style={{ width: '200px' }}
             value={selectedCategory}
             onChange={(e) => setSelectedCategory(e.target.value)}
@@ -104,7 +105,7 @@ const ProductsPage = () => {
             <option value="men's clothing">Men's Clothing</option>
             <option value="women's clothing">Women's Clothing</option>
           </Form.Select>
-          <Form.Select 
+          <Form.Select
             style={{ width: '200px' }}
             value={selectedPrice}
             onChange={(e) => setSelectedPrice(e.target.value)}
@@ -121,30 +122,30 @@ const ProductsPage = () => {
         {currentProducts.map((product) => (
           <Col key={product.id}>
             <Card className="h-100 shadow-sm">
-              <div 
-                className="bg-light d-flex justify-content-center align-items-center" 
+              <div
+                className="bg-light d-flex justify-content-center align-items-center"
                 style={{ height: '200px', cursor: 'pointer' }}
                 onClick={() => navigate(`/product/${product.id}`)}
               >
-                <Card.Img 
-                  variant="top" 
-                  src={product.image} 
-                  style={{ maxHeight: '100%', maxWidth: '100%', objectFit: 'contain' }} 
+                <Card.Img
+                  variant="top"
+                  src={product.image}
+                  style={{ maxHeight: '100%', maxWidth: '100%', objectFit: 'contain' }}
                 />
               </div>
               <Card.Body className="d-flex flex-column">
                 <Card.Title className="mb-2" style={{ fontSize: '1rem' }}>
-                  {product.title.length > 50 
-                    ? `${product.title.substring(0, 50)}...` 
+                  {product.title.length > 50
+                    ? `${product.title.substring(0, 50)}...`
                     : product.title}
                 </Card.Title>
                 <div className="mb-2">
-                  {renderRating(product.rating.rate)} 
+                  {renderRating(product.rating.rate)}
                   <small className="text-muted ms-2">({product.rating.count})</small>
                 </div>
                 <div className="mt-auto">
                   <h5 className="text-danger mb-3">${product.price}</h5>
-                  <Button variant="warning" className="w-100">
+                  <Button variant="warning" className="w-100" onClick={() => addItemToCart(product)}>
                     <FontAwesomeIcon icon={faShoppingCart} className="me-2" />
                     Add to Cart
                   </Button>
@@ -166,8 +167,8 @@ const ProductsPage = () => {
           <Col className="d-flex justify-content-center">
             <Pagination>
               {[...Array(Math.ceil(filteredProducts.length / productsPerPage)).keys()].map(number => (
-                <Pagination.Item 
-                  key={number + 1} 
+                <Pagination.Item
+                  key={number + 1}
                   active={number + 1 === currentPage}
                   onClick={() => paginate(number + 1)}
                 >
