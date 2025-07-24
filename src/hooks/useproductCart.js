@@ -16,7 +16,7 @@ export const useCart = () => {
   const totalPrice = useSelector(selectTotalPrice);
 
   const addItemToCart = (product, quantity = 1) => {
-    dispatch(addToCart({ ...product, quantity }));
+    dispatch(addToCart(product, quantity));
   };
 
   const decreaseItemQuantity = (productId) => {

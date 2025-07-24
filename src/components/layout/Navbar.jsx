@@ -5,6 +5,7 @@ import {
   FaBars,
   FaShoppingCart,
 } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 import amazonLogo from '../../assets/Amazon-Logo-768x432.png';
 import '../../styles/navbar.css';
 
@@ -69,10 +70,12 @@ export const Navbar = () => {
               <div><strong>& Orders</strong></div>
             </div>
 
-            <div className="cart d-flex align-items-center text-white">
-              <FaShoppingCart className="me-1" />
-              <strong>Cart</strong>
-            </div>
+            <Link to="/cart" className="no-underline">
+              <div className="cart d-flex align-items-center text-white">
+                <FaShoppingCart className="me-1 " /> 
+                <strong>Cart</strong> 
+              </div>
+            </Link>
           </div>
         </div>
       </div>
