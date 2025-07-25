@@ -5,6 +5,8 @@ import { Home } from './pages/Home'
 import WishlistPage from "./pages/WishlistPage"
 import CartPage from './pages/CartPage'
 import ProductsPage from './pages/ProductsPage'
+import LoginPage from './pages/Login'
+import CreateAccount from './pages/Register'
 
 function App() {
   return (
@@ -15,8 +17,13 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/cart" element={<CartPage />} />
           <Route path="/products" element={<ProductsPage />} />
+
           <Route path="/wishlist" element={<WishlistPage />} />
 
+
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<CreateAccount/>} />
+          
         </Routes>
         <Footer />
       </BrowserRouter>
