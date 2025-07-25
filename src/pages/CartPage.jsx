@@ -1,6 +1,8 @@
 import { Container, Row, Col, Button, Form } from 'react-bootstrap';
 import CartItem from '../components/ui/CartItem';
 import { useCart } from '../hooks/useproductCart';
+import { useWishlist } from '../hooks/useWishlist';
+
 import '../styles/CartPage.css';
 
 
@@ -14,22 +16,9 @@ export default function CartPage() {
     removeItem,
   } = useCart();
 
-  const changeQty = (id, newQty) => {
-    const item = cartItems.find(i => i.id === id);
-    if (!item) return;
+  const { addItem } = useWishlist();
 
-    const diff = newQty - item.quantity;
 
-    if (diff > 0) addItemToCart(item, diff);
-
-    // decrease — remove 1 unit per dispatch (slice already handles “if qty==1 remove row”)
-    if (diff < 0) {
-      for (let i = 0; i < Math.abs(diff); i++) decreaseItemQuantity(id);
-    }
-  };
-
-  const saveForLater = id =>
-    alert(`Saved item ${id} for later (stub for future wishlist feature)`);
 
   return (
     <Container className="cart-page my-4">
@@ -53,11 +42,14 @@ export default function CartPage() {
           {cartItems.map(item => (
             <CartItem
               key={item.id}
-              /* CartItem still expects `qty`, so rename on the fly */
-              item={{ ...item, qty: item.quantity }}
-              onQtyChange={changeQty}
-              onRemove={removeItem}
-              onSaveLater={saveForLater}
+              item={item}
+              onIncrease={() => addItemToCart(item, 1)}
+              onDecrease={() => decreaseItemQuantity(item.id)}
+              onRemove={() => removeItem(item.id)}
+              onSaveLater={() => {
+                removeItem(item.id);
+                addItem(item);
+              }}
             />
           ))}
         </Col>

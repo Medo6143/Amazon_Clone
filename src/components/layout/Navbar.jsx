@@ -8,8 +8,10 @@ import {
 import { Link } from 'react-router-dom';
 import amazonLogo from '../../assets/Amazon-Logo-768x432.png';
 import '../../styles/navbar.css';
+import { FaHeart } from 'react-icons/fa'
 
 export const Navbar = () => {
+
   return (
     <header className="bg-dark text-white">
       <div className="container-fluid px-3">
@@ -69,11 +71,13 @@ export const Navbar = () => {
               <small>Returns</small>
               <div><strong>& Orders</strong></div>
             </div>
-
+            <Link to="/wishlist" className="nav-link position-relative">
+              <FaHeart size={20} />
+            </Link>
             <Link to="/cart" className="no-underline">
               <div className="cart d-flex align-items-center text-white">
-                <FaShoppingCart className="me-1 " /> 
-                <strong>Cart</strong> 
+                <FaShoppingCart className="me-1 " />
+                <strong>Cart</strong>
               </div>
             </Link>
           </div>
