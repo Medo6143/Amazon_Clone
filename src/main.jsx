@@ -8,11 +8,20 @@ import { store } from './store.js';
 import { Provider } from 'react-redux';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 
 createRoot(document.getElementById('root')).render(
 
   <StrictMode>
-    <Provider store={store}> 
+    <Provider store={store}>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={2_000}
+        hideProgressBar
+        newestOnTop
+        theme="colored"
+      />
       <App />
     </Provider>
   </StrictMode>,
