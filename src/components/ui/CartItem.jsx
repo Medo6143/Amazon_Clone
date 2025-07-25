@@ -1,40 +1,60 @@
 import { Row, Col, Button, Form } from 'react-bootstrap';
+import { FaShoppingCart, FaMinus, FaPlus, FaTrashAlt, FaHeart } from 'react-icons/fa'
 
 export default function CartItem({
   item,
-  onQtyChange,
+  onIncrease,
+  onDecrease,
   onRemove,
   onSaveLater,
 }) {
   return (
-    <Row className="py-3 border-bottom">
+    <Row className="py-3 border-bottom cart-row">
+      {/* image */}
       <Col xs={4} md={3}>
         <img src={item.image} alt={item.title} className="img-fluid" />
       </Col>
 
-      <Col xs={8} md={6}>
+      {/* details & controls */}
+      <Col xs={8} md={9} className="d-flex flex-column">
         <h6 className="fw-normal">{item.title}</h6>
-        <p className="fw-bold mb-1">${item.price.toFixed(2)}</p>
-        <p className="small text-success mb-2">In Stock</p>
 
-        <div className="d-flex align-items-center">
-          <Form.Select
-            size="sm"
-            className="qty-dropdown me-3"
-            value={item.qty}
-            onChange={e => onQtyChange(item.id, Number(e.target.value))}
-          >
-            {[...Array(10).keys()].map(n =>
-              <option key={n + 1} value={n + 1}>Qty: {n + 1}</option>
-            )}
-          </Form.Select>
+        <div className="d-flex align-items-center gap-3 flex-wrap">
+          {/* quantity pill */}
+          <div className="d-flex align-items-center border rounded-pill qty-pill">
+            <Button
+              variant="light"
+              className="pill-btn"
+              onClick={onDecrease}
+            >
+              <FaMinus />
+            </Button>
 
-          <Button variant="link" size="sm" onClick={() => onRemove(item.id)}>
-            Delete
+            <span className="px-3 fw-bold small text-muted">
+              {item.quantity}
+            </span>
+
+            <Button
+              variant="light"
+              className="pill-btn"
+              onClick={onIncrease}
+            >
+              <FaPlus />
+            </Button>
+          </div>
+
+          {/* unit price */}
+          <span className="fw-bold">${item.price.toFixed(2)}</span>
+
+          {/* actions */}
+          <Button variant="link" size="sm" className="text-danger p-0" onClick={onRemove}>
+            <FaTrashAlt className="me-1" />
+            Remove
           </Button>
 
-          <Button variant="link" size="sm" onClick={() => onSaveLater(item.id)}>
-            Save for later
+          <Button variant="link" size="sm" onClick={onSaveLater}>
+            <FaHeart className="me-1 text-danger" />
+            Move to Wishlist
           </Button>
         </div>
       </Col>
