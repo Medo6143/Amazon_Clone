@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Container, Row, Col, Card, Button, Form, Pagination, Badge } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faStarHalfAlt, faShoppingCart, faSearch, faFilter } from '@fortawesome/free-solid-svg-icons';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import ProductCardSkeleton from '../components/ui/ProductCardSkeleton';
 import { useProducts } from '../hooks/useProducts';
 import { useCart } from '../hooks/useproductCart';
@@ -122,17 +122,19 @@ const ProductsPage = () => {
         {currentProducts.map((product) => (
           <Col key={product.id}>
             <Card className="h-100 shadow-sm">
-              <div
-                className="bg-light d-flex justify-content-center align-items-center"
-                style={{ height: '200px', cursor: 'pointer' }}
-                onClick={() => navigate(`/product/${product.id}`)}
-              >
-                <Card.Img
-                  variant="top"
-                  src={product.image}
-                  style={{ maxHeight: '100%', maxWidth: '100%', objectFit: 'contain' }}
-                />
-              </div>
+              <Link to={`/products/${product.id}`}>
+                <div
+                  className="bg-light d-flex justify-content-center align-items-center"
+                  style={{ height: '200px', cursor: 'pointer' }}
+                  onClick={() => navigate(`/product/${product.id}`)}
+                >
+                  <Card.Img
+                    variant="top"
+                    src={product.image}
+                    style={{ maxHeight: '100%', maxWidth: '100%', objectFit: 'contain' }}
+                  />
+                </div>
+              </Link>
               <Card.Body className="d-flex flex-column">
                 <Card.Title className="mb-2" style={{ fontSize: '1rem' }}>
                   {product.title.length > 50
