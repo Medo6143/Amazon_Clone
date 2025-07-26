@@ -3,9 +3,13 @@ import { Container, Row, Col, Card, Button, Form, Pagination, Badge } from 'reac
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faStarHalfAlt, faShoppingCart, faSearch, faFilter } from '@fortawesome/free-solid-svg-icons';
 import { Link, useNavigate } from 'react-router-dom';
+
+import { FaShoppingCart, FaMinus, FaPlus, FaTrashAlt, FaRegHeart, FaHeart  } from 'react-icons/fa'
+
 import ProductCardSkeleton from '../components/ui/ProductCardSkeleton';
 import { useProducts } from '../hooks/useProducts';
 import { useCart } from '../hooks/useproductCart';
+import { useWishlist } from '../hooks/useWishlist';
 
 const ProductsPage = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -15,11 +19,20 @@ const ProductsPage = () => {
   const [selectedPrice, setSelectedPrice] = useState('all');
   const navigate = useNavigate();
   const { products, loading, error } = useProducts();
-  const { addItemToCart } = useCart();
+  const {
+    addItemToCart,
+    decreaseItemQuantity,
+    removeItem,
+    getQuantity
+  } = useCart();
+
+  const { inWishlist, addItem, removeItem: removeWish } = useWishlist();
+
   useEffect(() => {
     if (error) console.error(error);
   }, [error]);
 
+    console.log(typeof products)
   // Filter products based on search term, category and price
   const filteredProducts = products.filter(product => {
     const matchesSearch = product.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -147,10 +160,71 @@ const ProductsPage = () => {
                 </div>
                 <div className="mt-auto">
                   <h5 className="text-danger mb-3">${product.price}</h5>
-                  <Button variant="warning" className="w-100" onClick={() => addItemToCart(product)}>
-                    <FontAwesomeIcon icon={faShoppingCart} className="me-2" />
-                    Add to Cart
-                  </Button>
+                  
+                  {/* add to wishlist */}
+                  <div className="position-absolute top-0 end-0 p-2">
+                    {inWishlist(product.id) ? (
+                      <FaHeart
+                        size={20}
+                        color="#e74c3c"
+                        style={{ cursor: 'pointer' }}
+                        onClick={() => removeWish(product.id)}
+                      />
+                    ) : (
+                      <FaRegHeart
+                        size={20}
+                        color="#555"
+                        style={{ cursor: 'pointer' }}
+                        onClick={() => addItem(product)}
+                      />
+                    )}
+                  </div>
+                  {/* add button */}
+                  {getQuantity(product.id) === 0 ? (
+                    <Button
+                      variant="warning"
+                      className="w-100"
+                      onClick={() => addItemToCart(product)}
+                    >
+                      <FontAwesomeIcon icon={faShoppingCart} className="me-2" />
+                      Add to Cart
+                    </Button>
+                  ) : (
+                    <div className="d-flex align-items-center justify-content-between w-100">
+                      <div
+                        className="d-flex align-items-center border rounded-pill overflow-hidden"
+                        style={{ borderColor: '#e0e0e0' }}
+                      >
+                        <Button
+                          variant="light"
+                          className="px-3 py-2"
+                          onClick={() => decreaseItemQuantity(product.id)}
+                        >
+                          <FaMinus />
+                        </Button>
+
+                        <span className="px-3 py-2 fw-bold text-muted">
+                          {getQuantity(product.id)}
+                        </span>
+
+                        <Button
+                          variant="light"
+                          className="px-3 py-2"
+                          onClick={() => addItemToCart(product, 1)}
+                        >
+                          <FaPlus />
+                        </Button>
+                      </div>
+
+                      <Button
+                        variant="link"
+                        className="text-danger fw-bold text-decoration-none"
+                        onClick={() => removeItem(product.id)}
+                      >
+                        <FaTrashAlt className="me-1" /> Remove
+                      </Button>
+                    </div>
+                  )}
                 </div>
               </Card.Body>
               {product.price < 30 && (

@@ -1,0 +1,42 @@
+.login-container {
+  background-color: #f2f2f2;
+}
+
+.login-box {
+  width: 100%;
+  max-width: 380px;
+}
+
+.amazon-logo {
+  height: 30px;
+}
+.create-account-container {
+  background-color: #fff;
+}
+
+.form-box {
+  width: 100%;
+  max-width: 400px;
+  border: 1px solid #ddd;
+  background-color: #fff;
+}
+
+.amazon-logo {
+  width: 90px;
+}
+
+.domain-text {
+  font-size: 1.2rem;
+  font-weight: bold;
+  position: relative;
+  top: -8px;
+  margin-left: 4px;
+}
+
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}

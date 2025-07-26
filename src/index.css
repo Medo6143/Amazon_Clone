@@ -1,0 +1,9 @@
+.Toastify__toast {
+    font-size: 0.85rem;
+}
+
+.Toastify__toast.Toastify__toast--success {
+    background-color: #ffca2c !important;
+    color: #212121 !important;
+    font-size: 0.85rem !important;
+}

@@ -1,11 +1,17 @@
-
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { Navbar } from './components/layout/Navbar'
 import { Footer } from './components/layout/footer'
 import { Home } from './pages/Home'
+import WishlistPage from "./pages/WishlistPage"
 import CartPage from './pages/CartPage'
 import ProductsPage from './pages/ProductsPage'
+
 import ProductDetails from './pages/ProductDetails'
+
+import LoginPage from './pages/Login'
+import CreateAccount from './pages/Register'
+import ProtuctedRoute from './routes/ProtectedRoute'
+
 
 function App() {
   return (
@@ -14,9 +20,25 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/cart" element={<CartPage />} />
+          <Route path="/cart" element={
+            <ProtuctedRoute>
+            <CartPage />
+            </ProtuctedRoute>
+            } />
           <Route path="/products" element={<ProductsPage />} />
           <Route path="/products/:id" element={<ProductDetails />} />
+
+
+          <Route path="/wishlist" element={
+            <ProtuctedRoute> 
+            <WishlistPage />
+           </ProtuctedRoute> 
+            } />
+
+
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<CreateAccount/>} />
+          
         </Routes>
         <Footer />
       </BrowserRouter>

@@ -19,3 +19,23 @@
 .filter-btn {
   white-space: nowrap;
 }
+
+  .product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+  }
+  
+  .price-text {
+    font-weight: bold;
+    color: #B12704;
+  }
+  
+  .rating {
+    color: #FFA41C;
+  }
+  
+  .filter-btn {
+    white-space: nowrap;
+  }
+
+
