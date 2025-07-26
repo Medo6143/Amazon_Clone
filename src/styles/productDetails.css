@@ -63,3 +63,12 @@
 .circle p {
     color: #1F8394 !important;
 }
+
+@media (max-width:350px) {
+    .details-section .details-card .content .images .img1 {
+        display: none;
+    }
+    .details-section .details-card .content .images .img2 {
+        width: 150px;
+    }
+}

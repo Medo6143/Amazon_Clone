@@ -60,13 +60,12 @@ function ProductDetails() {
                                 <img src={item.image} alt={item.title} className='img2' />
                             </div>
 
-
                             <div className='col-sm-12 col-lg-6 col-xxl-4 rigth'>
                                 <h3>Brand: WDIRARA</h3>
                                 <h2>{item.title}</h2>
-                                <div className="d-flex justify-content-between">
-                                    <h4 className='fs-4'>{item.rating.rate}  {renderRating(item.rating.rate)} <FaAngleDown /></h4>
-                                    <div className='d-flex gap-2'>
+                                <div className="row justify-content-between">
+                                    <h4 className='fs-4 fs-sm-5 col'>{item.rating.rate}  {renderRating(item.rating.rate)} <FaAngleDown /></h4>
+                                    <div className='d-flex gap-2 col'>
                                         <small className="">{item.rating.count} ratings</small>
                                         <h6> | </h6>
                                         <small className="">Search this page</small>
@@ -75,16 +74,16 @@ function ProductDetails() {
                                 <div className="line"></div>
                                 <p className='d-flex justify-content-start text-dark'>SAR <span className='fs-2'>{item.price}</span> </p>
                                 <h4 className='text-black fs-5 fw-normal'>All price include VAT.</h4>
-                                <div className='d-flex gap-1'>
-                                    <p>Sign in to redeem.</p>
-                                    <p className='px-1 bg-success text-black'>Extra 20%</p>
-                                    <p className='text-black'>off  with meem credit cards.</p>
+                                <div className='row gap-1 align-items-center text-center'>
+                                    <p className='col'>Sign in to redeem.</p>
+                                    <p className='px-1 bg-success text-black col'>Extra 20%</p>
+                                    <p className='text-black col'>off  with meem credit cards.</p>
                                 </div>
                                 <p className='text-black'>Enter code MEEM20 at checkout. Discount by Amazon.</p>
-                                <div className='d-flex gap-3'>
-                                    <Circle pargraph={'Electronic payment Only'} img={img1} />
-                                    <Circle pargraph={'30 days Returnable'} img={img2} />
-                                    <Circle pargraph={'Secure transaction'} img={img3} />
+                                <div className='row gap-3'>
+                                    <Circle pargraph={'Electronic payment Only'} img={img1} className={'col'} />
+                                    <Circle pargraph={'30 days Returnable'} img={img2} className={'col'}/>
+                                    <Circle pargraph={'Secure transaction'} img={img3} className={'col'}/>
                                 </div>
                                 <div className="line"></div>
                                 <h5>About this item</h5>
