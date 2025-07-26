@@ -4,9 +4,11 @@ import { FaAngleRight } from "react-icons/fa6";
 import { Button, Card } from 'react-bootstrap';
 import { useCart } from '../hooks/useproductCart';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar, faStarHalfAlt, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
+import { faStar, faStarHalfAlt } from '@fortawesome/free-solid-svg-icons';
 import '../styles/ProductDetails.css';
 import { FaAngleDown } from "react-icons/fa";
+import { IoLocationOutline } from "react-icons/io5";
+
 import Circle from '../components/ui/Circle';
 import img1 from '../assets/image 620.png'
 import img2 from '../assets/image 621.png'
@@ -92,11 +94,48 @@ function ProductDetails() {
                             </div>
 
                             <Card className='col-sm-12 col-xxl-2'>
-                                <Button variant="warning" className="w-100" onClick={() => addItemToCart(item)}>
-                                    <FontAwesomeIcon icon={faShoppingCart} className="me-2" />
+                                <p className='d-flex justify-content-start text-dark'>SAR <span className='fs-2'>{item.price}</span> </p>
+                                <h6 className='text-black'>SAR96 delivery 6-9 October.</h6>
+                                <p style={{ color: '#1F8394' }}>Details</p>
+                                <div className='d-flex'>
+                                    <IoLocationOutline className='text-black fs-2' />
+                                    <p style={{ color: '#1F8394' }}>
+                                        Delivery to Riyadh - Update Location
+                                    </p>
+                                </div>
+                                <p className='text-danger fw-bold'>Usually ships within 4 to 5 days</p>
+                                <select name="" id="" className='mb-3 p-2 bg-secondary outline-none rounded'>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                </select>
+                                <Button variant="warning" className="w-100 rounded-5" onClick={() => addItemToCart(item)}>
                                     Add to Cart
                                 </Button>
-
+                                <Button className="w-100 mt-2 rounded-5" onClick={() => addItemToCart(item)}>
+                                    Buy Now
+                                </Button>
+                                <table className='mt-3'>
+                                    <tr className='my-2'>
+                                        <th className='text-secondary-emphasis'>Ships from</th>
+                                        <td className='text-secondary-emphasis'>Monatik LLC</td>
+                                    </tr>
+                                    <tr className='my-2'>
+                                        <th>Sold by</th>
+                                        <td style={{ color: '#1F8394' }}>Monatik LLC</td>
+                                    </tr>
+                                    <tr className='my-2'>
+                                        <th>Payment</th>
+                                        <td style={{ color: '#1F8394' }}>Secure transaction</td>
+                                    </tr>
+                                </table>
+                                <div className="line"></div>
+                                <Button variant='transparent' className="w-100 mt-2 border" onClick={() => addItemToCart(item)}>
+                                    Add to List
+                                </Button>
                             </Card>
                         </div>
                     </div>
