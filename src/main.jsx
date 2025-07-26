@@ -10,6 +10,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
+import { AuthProvider } from './services/context/AuthContext.jsx';
 
 createRoot(document.getElementById('root')).render(
 
@@ -22,7 +23,10 @@ createRoot(document.getElementById('root')).render(
         newestOnTop
         theme="colored"
       />
+      <AuthProvider>
       <App />
+
+      </AuthProvider>
     </Provider>
   </StrictMode>,
 )

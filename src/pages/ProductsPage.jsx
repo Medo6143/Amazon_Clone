@@ -30,6 +30,7 @@ const ProductsPage = () => {
     if (error) console.error(error);
   }, [error]);
 
+    console.log(typeof products)
   // Filter products based on search term, category and price
   const filteredProducts = products.filter(product => {
     const matchesSearch = product.title.toLowerCase().includes(searchTerm.toLowerCase()) ||

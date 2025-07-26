@@ -7,6 +7,7 @@ import CartPage from './pages/CartPage'
 import ProductsPage from './pages/ProductsPage'
 import LoginPage from './pages/Login'
 import CreateAccount from './pages/Register'
+import ProtuctedRoute from './routes/ProtectedRoute'
 
 function App() {
   return (
@@ -15,10 +16,18 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/cart" element={<CartPage />} />
+          <Route path="/cart" element={
+            <ProtuctedRoute>
+            <CartPage />
+            </ProtuctedRoute>
+            } />
           <Route path="/products" element={<ProductsPage />} />
 
-          <Route path="/wishlist" element={<WishlistPage />} />
+          <Route path="/wishlist" element={
+            <ProtuctedRoute> 
+            <WishlistPage />
+           </ProtuctedRoute> 
+            } />
 
 
           <Route path="/login" element={<LoginPage />} />
