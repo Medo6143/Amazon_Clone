@@ -1,26 +1,60 @@
 import React, { useState } from 'react';
 import '../styles/CreateAccount.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import amazonLogo from '../assets//Amazon-Logo-768x432.png';
+import amazonLogo from '../assets/Amazon-Logo-768x432.png';
+import { createAccount } from '../services/auth/createAccount'; // <-- صحّح المسار
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { Navigate, useNavigate } from 'react-router-dom';
 
-const CreateAccount = ({ onAccountCreated }) => {
+const CreateAccount = ({ onAccountCreated, onGoToSignIn }) => {
   const [name, setName] = useState('');
-  const [emailOrPhone, setEmailOrPhone] = useState('');
+  const [email, setEmail] = useState(''); 
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate()
 
-  const handleCreate = (e) => {
+  const handleCreate = async (e) => {
     e.preventDefault();
-
-    if (!name || !emailOrPhone || !password) {
-      alert('Please fill in all fields');
-      return;
+    if (!name.trim() || !email.trim() || !password.trim()) {
+      return toast.error('Please fill in all fields', { position: 'top-center' });
+    }
+    if (!/\S+@\S+\.\S+/.test(email)) {
+      return toast.error('Please enter a valid email address', { position: 'top-center' });
     }
 
-    onAccountCreated({ name, emailOrPhone });
+    setLoading(true);
+    try {
+      const user = await createAccount({
+        name: name.trim(),
+        email: email.trim(),
+        password,
+        verifyEmail: true,
+      });
+
+      toast.success('Account created successfully! Check your email to verify.', {
+        position: 'top-center',
+      });
+
+      onAccountCreated?.(user);
+      navigate('/login')
+    } catch (err) {
+      toast.error(err?.message || 'Something went wrong.', {
+        position: 'top-center',
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleGoToSignIn = (e) => {
+    e.preventDefault();
+    onGoToSignIn?.(); 
   };
 
   return (
     <div className="create-account-container d-flex justify-content-center align-items-center min-vh-100">
+      <ToastContainer />
       <div className="form-box p-4 rounded shadow-sm bg-white">
         <div className="text-center mb-3">
           <img src={amazonLogo} alt="Amazon Logo" className="amazon-logo mb-2" />
@@ -39,12 +73,12 @@ const CreateAccount = ({ onAccountCreated }) => {
             />
           </div>
           <div className="mb-3">
-            <label className="form-label">Email or mobile number</label>
+          <label className="form-label">Email</label>
             <input
-              type="text"
+              type="email"
               className="form-control"
-              value={emailOrPhone}
-              onChange={(e) => setEmailOrPhone(e.target.value)}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
           <div className="mb-3">
@@ -56,8 +90,12 @@ const CreateAccount = ({ onAccountCreated }) => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          <button type="submit" className="btn btn-warning w-100 mb-3">
-            Verify mobile number
+          <button
+            type="submit"
+            className="btn btn-warning w-100 mb-3"
+            disabled={loading}
+          >
+            {loading ? 'Creating...' : 'Create account'}
           </button>
         </form>
 
@@ -67,7 +105,10 @@ const CreateAccount = ({ onAccountCreated }) => {
         </div>
 
         <div className="mb-2">
-          Already have an account? <a href="#" className="text-primary" onClick={() => onAccountCreated({})}>Sign in ▸</a>
+          Already have an account?{' '}
+          <a href="#" className="text-primary" onClick={handleGoToSignIn}>
+            Sign in ▸
+          </a>
         </div>
 
         <p className="text-muted small">
