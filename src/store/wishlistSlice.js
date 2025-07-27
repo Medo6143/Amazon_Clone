@@ -17,6 +17,9 @@ const wishlistSlice = createSlice({
     },
     clearWishlist(state) {
       state.items = [];
+    },
+    hydrateWishlist(state, action) {
+      return action.payload;
     }
   }
 });
@@ -24,11 +27,12 @@ const wishlistSlice = createSlice({
 export const {
   addToWishlist,
   removeFromWishlist,
-  clearWishlist
+  clearWishlist,
+  hydrateWishlist
 } = wishlistSlice.actions;
 
 export default wishlistSlice.reducer;
 
 export const selectWishlistItems = state => state.wishlist.items;
-export const isInWishlist       = id => state =>
+export const isInWishlist = id => state =>
   state.wishlist.items.some(i => i.id === id);
