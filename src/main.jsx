@@ -11,6 +11,7 @@ import "slick-carousel/slick/slick-theme.css";
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 import { AuthProvider } from './services/context/AuthContext.jsx';
+import './services/firebaseSync.js';
 
 createRoot(document.getElementById('root')).render(
 
