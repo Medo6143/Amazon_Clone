@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-  FaMapMarkerAlt,
-  FaSearch,
-  FaBars,
-  FaShoppingCart,
-} from 'react-icons/fa';
+import { FaMapMarkerAlt, FaBars, FaShoppingCart } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import amazonLogo from '../../assets/Amazon-Logo-768x432.png';
 import '../../styles/navbar.css';
@@ -15,40 +10,30 @@ export const Navbar = () => {
       <div className="container-fluid px-3">
         {/* Top Navbar */}
         <div className="d-flex flex-wrap justify-content-between align-items-center py-2 gap-3">
-          {/* Logo & Location */}
+          
           <div className="d-flex align-items-center gap-3 flex-shrink-0">
-            <img
-              src={amazonLogo}
-              alt="Amazon"
-              className="amazon-logo"
-            />
+            <img src={amazonLogo} alt="Amazon" className="amazon-logo" />
             <div className="location d-none d-md-flex align-items-start">
               <FaMapMarkerAlt className="me-1 mt-1" />
               <div style={{ lineHeight: '1' }}>
-                <small>Delivering to Surat 394210</small>
+                <small>Delivering to Cairo</small>
                 <div><strong>Update location</strong></div>
               </div>
             </div>
           </div>
 
-          {/* Search Bar */}
-          <div className="search-bar d-flex flex-grow-1 flex-shrink-1">
-            <select className="form-select category-select">
-              <option>All</option>
-              <option>Books</option>
-              <option>Electronics</option>
-            </select>
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Search Amazon"
-            />
-            <button className="btn btn-warning">
-              <FaSearch />
+          <div className="d-flex gap-2 flex-wrap align-items-center">
+            <Link to="/products" className="btn btn-outline-light btn-sm">
+              Products
+            </Link>
+            <Link to="/contact" className="btn btn-outline-light btn-sm">
+              Contact Us
+            </Link>
+            <button className="btn btn-danger btn-sm">
+              Logout
             </button>
           </div>
 
-          {/* Right Side Icons */}
           <div className="d-flex align-items-center gap-3 flex-shrink-0">
             <div className="lang d-flex align-items-center d-none d-sm-flex">
               <img
@@ -60,20 +45,20 @@ export const Navbar = () => {
               <span>EN</span>
             </div>
 
-            <div className="account text-white d-none d-md-block">
+            <div className="account d-none d-md-block">
               <small>Hello, sign in</small>
               <div><strong>Account & Lists ▾</strong></div>
             </div>
 
-            <div className="returns text-white d-none d-md-block">
+            <div className="returns d-none d-md-block">
               <small>Returns</small>
               <div><strong>& Orders</strong></div>
             </div>
 
             <Link to="/cart" className="no-underline">
               <div className="cart d-flex align-items-center text-white">
-                <FaShoppingCart className="me-1 " /> 
-                <strong>Cart</strong> 
+                <FaShoppingCart className="me-1" />
+                <strong>Cart</strong>
               </div>
             </Link>
           </div>
