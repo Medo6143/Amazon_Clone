@@ -1,12 +1,10 @@
 import { useProducts } from '../hooks/useProducts'
-import { useWishlist } from '../hooks/useWishlist';
-import { useParams, useNavigate, Link } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { FaAngleRight, FaAngleDown } from "react-icons/fa6";
-import { Button, Card, Row, Col, Badge } from 'react-bootstrap'
+import { Button, Card, Row, Col } from 'react-bootstrap'
 import { useCart } from '../hooks/useproductCart'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faStar, faStarHalfAlt, faShoppingCart } from '@fortawesome/free-solid-svg-icons'
-import { FaShoppingCart, FaMinus, FaPlus, FaTrashAlt, FaRegHeart, FaHeart } from 'react-icons/fa'
+import { faStar, faStarHalfAlt } from '@fortawesome/free-solid-svg-icons'
 import '../styles/ProductDetails.css'
 import { IoLocationOutline } from "react-icons/io5"
 import Circle from '../components/ui/Circle'
@@ -15,18 +13,10 @@ import img2 from '../assets/image 621.png'
 import img3 from '../assets/image 622.png'
 
 function ProductDetails() {
-
-    const {
-        addItemToCart,
-        decreaseItemQuantity,
-        removeItem,
-        getQuantity
-    } = useCart();
     const { id } = useParams()
     const navigate = useNavigate()
     const { products } = useProducts()
-
-    const { inWishlist, addItem, removeItem: removeWish } = useWishlist();
+    const { addItemToCart } = useCart()
 
     const product = products.find((product) => product.id == id)
     const relatedProducts = products.filter((p) =>
@@ -56,7 +46,7 @@ function ProductDetails() {
 
     const handleBuyNow = (item) => {
         addItemToCart(item)
-        navigate('/cart')
+        navigate('/checkout')
     }
 
     if (!product) {
@@ -86,7 +76,7 @@ function ProductDetails() {
                                 </div>
                             </div>
                             <div className="line"></div>
-                            <p className='d-flex justify-content-start text-dark'>$<span className='fs-2'>{product.price}</span></p>
+                            <p className='d-flex justify-content-start text-dark'>SAR <span className='fs-2'>{product.price}</span></p>
                             <h4 className='text-black fs-5 fw-normal'>All price include VAT.</h4>
                             <div className='row gap-1 align-items-center text-center'>
                                 <p className='col'>Sign in to redeem.</p>
@@ -145,6 +135,9 @@ function ProductDetails() {
                                 </tbody>
                             </table>
                             <div className="line"></div>
+                            <Button variant='transparent' className="w-100 mt-2 border">
+                                Add to List
+                            </Button>
                         </Card>
                     </div>
                 </div>
@@ -161,30 +154,8 @@ function ProductDetails() {
                     <div className="related-products mt-5">
                         <h3 className="mb-4">More from {product.category}</h3>
                         <Row>
-
-                            {relatedProducts.map((product) => (
-                                <Col key={product.id}>
-                                    <Card className="h-100 shadow-sm">
-                                        <Link to={`/product/${product.id}`}>
-                                            <div
-                                                className="bg-light d-flex justify-content-center align-items-center"
-                                                style={{ height: '200px', cursor: 'pointer' }}
-                                            >
-                                                <Card.Img
-                                                    variant="top"
-                                                    src={product.image}
-                                                    style={{ maxHeight: '100%', maxWidth: '100%', objectFit: 'contain' }}
-                                                />
-                                            </div>
-                                        </Link>
-                                        <Card.Body className="d-flex flex-column">
-                                            <Card.Title className="mb-2" style={{ fontSize: '1rem' }}>
-                                                {product.title.length > 50
-                                                    ? `${product.title.substring(0, 50)}...`
-                                                    : product.title}
-
-                            {relatedProducts.map(relatedProduct => (
-                                <Col key={relatedProduct.id} xs={12} sm={6} md={4} lg={3} className="mb-4" onClick={() => navigate(`/products/${relatedProduct.id}`)}>
+                            {relatedProducts.map((relatedProduct, index) => (
+                                <Col key={index} xs={12} sm={6} md={4} lg={3} className="mb-4" onClick={() => navigate(`/product/${relatedProduct.id}`)}>
                                     <Card className="h-100">
                                         <Card.Img
                                             variant="top"
@@ -194,86 +165,24 @@ function ProductDetails() {
                                         <Card.Body>
                                             <Card.Title className="text-truncate">
                                                 {relatedProduct.title}
-
                                             </Card.Title>
-                                            <div className="mb-2">
-                                                {renderRating(product.rating.rate)}
-                                                <small className="text-muted ms-2">({product.rating.count})</small>
+                                            <div className="d-flex align-items-center mb-2">
+                                                {renderRating(relatedProduct.rating.rate)}
+                                                <span className="ms-2">{relatedProduct.rating.rate}</span>
                                             </div>
-                                            <div className="mt-auto">
-                                                <h5 className="text-danger mb-3">${product.price}</h5>
-
-                                                {/* add to wishlist */}
-                                                <div className="position-absolute top-0 end-0 p-2">
-                                                    {inWishlist(product.id) ? (
-                                                        <FaHeart
-                                                            size={20}
-                                                            color="#e74c3c"
-                                                            style={{ cursor: 'pointer' }}
-                                                            onClick={() => removeWish(product.id)}
-                                                        />
-                                                    ) : (
-                                                        <FaRegHeart
-                                                            size={20}
-                                                            color="#555"
-                                                            style={{ cursor: 'pointer' }}
-                                                            onClick={() => addItem(product)}
-                                                        />
-                                                    )}
-                                                </div>
-                                                {/* add button */}
-                                                {getQuantity(product.id) === 0 ? (
-                                                    <Button
-                                                        variant="warning"
-                                                        className="w-100"
-                                                        onClick={() => addItemToCart(product)}
-                                                    >
-                                                        <FontAwesomeIcon icon={faShoppingCart} className="me-2" />
-                                                        Add to Cart
-                                                    </Button>
-                                                ) : (
-                                                    <div className="d-flex align-items-center justify-content-between w-100">
-                                                        <div
-                                                            className="d-flex align-items-center border rounded-pill overflow-hidden"
-                                                            style={{ borderColor: '#e0e0e0' }}
-                                                        >
-                                                            <Button
-                                                                variant="light"
-                                                                className="px-3 py-2"
-                                                                onClick={() => decreaseItemQuantity(product.id)}
-                                                            >
-                                                                <FaMinus />
-                                                            </Button>
-
-                                                            <span className="px-3 py-2 fw-bold text-muted">
-                                                                {getQuantity(product.id)}
-                                                            </span>
-
-                                                            <Button
-                                                                variant="light"
-                                                                className="px-3 py-2"
-                                                                onClick={() => addItemToCart(product, 1)}
-                                                            >
-                                                                <FaPlus />
-                                                            </Button>
-                                                        </div>
-
-                                                        <Button
-                                                            variant="link"
-                                                            className="text-danger fw-bold text-decoration-none"
-                                                            onClick={() => removeItem(product.id)}
-                                                        >
-                                                            <FaTrashAlt className="me-1" /> Remove
-                                                        </Button>
-                                                    </div>
-                                                )}
-                                            </div>
+                                            <Card.Text className="fw-bold">
+                                                SAR {relatedProduct.price}
+                                            </Card.Text>
                                         </Card.Body>
-                                        {product.price < 30 && (
-                                            <Badge bg="danger" className="position-absolute top-0 start-0 m-2">
-                                                Sale
-                                            </Badge>
-                                        )}
+                                        <Card.Footer className="bg-white">
+                                            <Button
+                                                variant="warning"
+                                                className="w-100"
+                                                onClick={() => addItemToCart(relatedProduct)}
+                                            >
+                                                Add to Cart
+                                            </Button>
+                                        </Card.Footer>
                                     </Card>
                                 </Col>
                             ))}
