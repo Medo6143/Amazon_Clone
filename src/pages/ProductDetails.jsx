@@ -5,7 +5,7 @@ import { Button, Card, Row, Col } from 'react-bootstrap'
 import { useCart } from '../hooks/useproductCart'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faStar, faStarHalfAlt } from '@fortawesome/free-solid-svg-icons'
-import '../styles/ProductDetails.css'
+import '../styles/productDetails.css'
 import { IoLocationOutline } from "react-icons/io5"
 import Circle from '../components/ui/Circle'
 import img1 from '../assets/image 620.png'
