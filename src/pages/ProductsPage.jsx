@@ -203,11 +203,9 @@ const ProductsPage = () => {
                         >
                           <FaMinus />
                         </Button>
-
                         <span className="px-3 py-2 fw-bold text-muted">
                           {getQuantity(product.id)}
                         </span>
-
                         <Button
                           variant="light"
                           className="px-3 py-2"
@@ -216,7 +214,6 @@ const ProductsPage = () => {
                           <FaPlus />
                         </Button>
                       </div>
-
                       <Button
                         variant="link"
                         className="text-danger fw-bold text-decoration-none"

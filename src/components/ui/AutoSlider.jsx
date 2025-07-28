@@ -4,10 +4,11 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import sock from '../../assets/sock.png';
 import useCategoryProducts from '../../hooks/useCategoryProducts';
+import { useNavigate } from 'react-router-dom';
 
 export default function AutoSlider({title}) {
   const { sliderData, loading} = useCategoryProducts();
-
+    const navigate = useNavigate();
     const settings = {
         dots: false,
         arrows: false,
@@ -29,7 +30,7 @@ export default function AutoSlider({title}) {
                     <p>{title}</p>
                     <SlickSlider {...settings}>
                         {sliderData.map((img, index) => (
-                            <div key={index}>
+                            <div key={index} >
                                 <img src={img.image} className='me-4' alt={`slider ${index}`} />
                             </div>
                         ))}

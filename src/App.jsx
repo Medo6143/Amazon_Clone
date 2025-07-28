@@ -1,95 +1,104 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import MainLayout from './layout/Mainlayout'
-import { Home } from './pages/Home'
-import WishlistPage from "./pages/WishlistPage"
-import CartPage from './pages/CartPage'
-import ProductsPage from './pages/ProductsPage'
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import MainLayout from "./layout/Mainlayout";
+import { Home } from "./pages/Home";
+import WishlistPage from "./pages/WishlistPage";
+import CartPage from "./pages/CartPage";
+import ProductsPage from "./pages/ProductsPage";
 
-import ProductDetails from './pages/ProductDetails'
+import ProductDetails from "./pages/ProductDetails";
 
-import LoginPage from './pages/Login'
-import CreateAccount from './pages/Register'
-import ProtuctedRoute from './routes/ProtectedRoute'
-import ProfilePage from './pages/Profile'
-import NotFound from './pages/PagesNotFound'
-
+import LoginPage from "./pages/Login";
+import CreateAccount from "./pages/Register";
+import ProtuctedRoute from "./routes/ProtectedRoute";
+import ProfilePage from "./pages/Profile";
+import NotFound from "./pages/PagesNotFound";
+import CategoryPage from "./pages/CatgoryPage";
 
 function App() {
   return (
     <>
-    <BrowserRouter>
-      <Routes>
-        {/* Public routes WITHOUT layout */}
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<CreateAccount />} />
+      <BrowserRouter>
+        <Routes>
+          {/* Public routes WITHOUT layout */}
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<CreateAccount />} />
 
-        {/* Routes WITH layout */}
-        <Route
-          path="/"
-          element={
-            <MainLayout>
-              <Home />
-            </MainLayout>
-          }
-        />
-        <Route
-          path="/products/:searchParam?"
-          element={
-            <MainLayout>
-              <ProductsPage />
-            </MainLayout>
-          }
-        />
-        <Route
-          path="/product/:id"
-          element={
-            <MainLayout>
-              <ProductDetails />
-            </MainLayout>
-          }
-        />
-        <Route
-          path="/cart"
-          element={
-            <ProtuctedRoute>
+          {/* Routes WITH layout */}
+          <Route
+            path="/"
+            element={
               <MainLayout>
-                <CartPage />
+                <Home />
               </MainLayout>
-            </ProtuctedRoute>
-          }
-        />
-        <Route
-          path="/wishlist"
-          element={
-            <ProtuctedRoute>
+            }
+          />
+          <Route
+            path="/products/:searchParam?"
+            element={
               <MainLayout>
-                <WishlistPage />
+                <ProductsPage />
               </MainLayout>
-            </ProtuctedRoute>
-          }
-        />
-        <Route
-          path="/profile"
-          element={
-            <ProtuctedRoute>
+            }
+          />
+          <Route
+            path="/product/:id"
+            element={
               <MainLayout>
-                <ProfilePage />
+                <ProductDetails />
               </MainLayout>
-            </ProtuctedRoute>
-          }
-        />
-      <Route
-  path="*"
-  element={
-    <MainLayout>
-      <NotFound />
-    </MainLayout>
-  }
-/>
-      </Routes>
-    </BrowserRouter>
+            }
+          />
+          <Route
+            path="/cart"
+            element={
+              <ProtuctedRoute>
+                <MainLayout>
+                  <CartPage />
+                </MainLayout>
+              </ProtuctedRoute>
+            }
+          />
+          <Route
+            path="/wishlist"
+            element={
+              <ProtuctedRoute>
+                <MainLayout>
+                  <WishlistPage />
+                </MainLayout>
+              </ProtuctedRoute>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <ProtuctedRoute>
+                <MainLayout>
+                  <ProfilePage />
+                </MainLayout>
+              </ProtuctedRoute>
+            }
+          />
+          <Route
+            path="*"
+            element={
+              <MainLayout>
+                <NotFound />
+              </MainLayout>
+            }
+          />
+
+          <Route
+            path="/category/:categoryName"
+            element={
+              <MainLayout>
+                <CategoryPage />
+              </MainLayout>
+            }
+          />
+        </Routes>
+      </BrowserRouter>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
