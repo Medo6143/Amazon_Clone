@@ -106,7 +106,7 @@ const CreateAccount = ({ onAccountCreated, onGoToSignIn }) => {
 
         <div className="mb-2">
           Already have an account?{' '}
-          <a href="#" className="text-primary" onClick={handleGoToSignIn}>
+          <a href="#" className="text-primary" onClick={() => navigate("/login")}>
             Sign in ▸
           </a>
         </div>

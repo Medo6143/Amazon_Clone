@@ -1,32 +1,100 @@
-/* Navbar.css */
-.amazon-logo {
-  width: 100px;
+.navbar-modern {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.desktop-logo {
+  height: 40px;
   object-fit: contain;
 }
 
-.search-bar .category-select {
-  max-width: 120px;
+.mobile-logo {
+  height: 30px;
+  object-fit: contain;
+}
+
+.search-bar {
+  max-width: 600px;
+  margin: 0 10px;
+}
+
+.search-bar .form-control {
   border-radius: 0;
 }
 
-.search-bar input {
-  flex: 1;
-  min-width: 100px;
-  border-radius: 0;
+.search-bar .btn-warning {
+  min-width: 45px;
 }
 
-.search-bar button {
-  border-radius: 0;
+.mobile-search-bar {
+  width: 100%;
 }
 
-/* Small screen tweaks */
-@media (max-width: 768px) {
-  .search-bar {
-    width: 100%;
-    margin-top: 10px;
+.nav-icon {
+  padding: 5px;
+  transition: all 0.3s ease;
+}
+
+.nav-icon:hover {
+  transform: scale(1.1);
+}
+
+.account-dropdown .dropdown-toggle::after {
+  display: none;
+}
+
+.account-dropdown .btn-link {
+  text-decoration: none;
+}
+
+.bottom-navbar {
+  overflow-x: auto;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+}
+
+.bottom-navbar .nav-link {
+  padding: 5px 8px;
+  font-size: 0.9rem;
+}
+
+.mobile-menu {
+  position: absolute;
+  width: 100%;
+  max-height: calc(100vh - 60px);
+  overflow-y: auto;
+  box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+}
+
+.mobile-menu .nav-link {
+  color: #ddd;
+  padding: 8px 0;
+  border-bottom: 1px solid #444;
+  display: flex;
+  align-items: center;
+}
+
+.mobile-menu h6 {
+  font-size: 1rem;
+  margin-top: 15px;
+  margin-bottom: 10px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 767.98px) {
+  .products-btn .fa-box-open {
+    margin-right: 0;
   }
+  
+  .products-btn span {
+    display: none;
+  }
+}
 
-  .location {
-    display: none !important;
+@media (max-width: 575.98px) {
+  .badge {
+    font-size: 0.5rem !important;
+    padding: 2px 4px;
   }
 }

@@ -1,6 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { Navbar } from './components/layout/Navbar'
-import { Footer } from './components/layout/footer'
+import MainLayout from './layout/Mainlayout'
 import { Home } from './pages/Home'
 import WishlistPage from "./pages/WishlistPage"
 import CartPage from './pages/CartPage'
@@ -11,37 +10,75 @@ import ProductDetails from './pages/ProductDetails'
 import LoginPage from './pages/Login'
 import CreateAccount from './pages/Register'
 import ProtuctedRoute from './routes/ProtectedRoute'
+import ProfilePage from './pages/Profile'
 
 
 function App() {
   return (
     <>
-      <BrowserRouter>
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/cart" element={
+    <BrowserRouter>
+      <Routes>
+        {/* Public routes WITHOUT layout */}
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<CreateAccount />} />
+
+        {/* Routes WITH layout */}
+        <Route
+          path="/"
+          element={
+            <MainLayout>
+              <Home />
+            </MainLayout>
+          }
+        />
+        <Route
+          path="/products"
+          element={
+            <MainLayout>
+              <ProductsPage />
+            </MainLayout>
+          }
+        />
+        <Route
+          path="/products/:id"
+          element={
+            <MainLayout>
+              <ProductDetails />
+            </MainLayout>
+          }
+        />
+        <Route
+          path="/cart"
+          element={
             <ProtuctedRoute>
-            <CartPage />
+              <MainLayout>
+                <CartPage />
+              </MainLayout>
             </ProtuctedRoute>
-            } />
-          <Route path="/products" element={<ProductsPage />} />
-          <Route path="/products/:id" element={<ProductDetails />} />
-
-
-          <Route path="/wishlist" element={
-            <ProtuctedRoute> 
-            <WishlistPage />
-           </ProtuctedRoute> 
-            } />
-
-
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/register" element={<CreateAccount/>} />
-          
-        </Routes>
-        <Footer />
-      </BrowserRouter>
+          }
+        />
+        <Route
+          path="/wishlist"
+          element={
+            <ProtuctedRoute>
+              <MainLayout>
+                <WishlistPage />
+              </MainLayout>
+            </ProtuctedRoute>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <ProtuctedRoute>
+              <MainLayout>
+                <ProfilePage />
+              </MainLayout>
+            </ProtuctedRoute>
+          }
+        />
+      </Routes>
+    </BrowserRouter>
     </>
   )
 }
