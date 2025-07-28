@@ -3,7 +3,7 @@ import amazonLogo from '../../assets/Amazon-Logo-768x432.png';
 import'../../styles/footer.css';
 export const Footer = () => {
   return (
-    <footer className="footer-section mt-5">
+    <footer className="footer-section ">
       {/* Back to Top */}
       <div className="text-center py-3 back-to-top">
         <a href="#">Back to Top</a>

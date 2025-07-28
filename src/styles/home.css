@@ -1,11 +1,13 @@
 
-body {
+.home-body {
   background-color: #575757 !important;
+  margin: 0;
+  padding: 0;
 }
 
 .priv-container {
   width: 100%;
-  max-width: 1140px; 
+  max-width: 90%; 
   margin-inline: auto;
   padding-inline: 12px;
 }
