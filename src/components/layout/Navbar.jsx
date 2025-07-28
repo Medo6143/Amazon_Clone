@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   FaMapMarkerAlt,
   FaSearch,
@@ -10,8 +10,8 @@ import {
   FaTimes,
   FaGlobe
 } from 'react-icons/fa';
-import { Link, useNavigate } from 'react-router-dom';
-import amazonLogo from '../../assets/Amazon-Logo-768x432.png';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import amazonLogo from '../../assets/White-Amazon-Logo-PNG-HD-Quality.png';
 import '../../styles/navbar.css';
 import { useAuth } from '../../services/context/AuthContext';
 import { signOut } from 'firebase/auth';
@@ -22,14 +22,20 @@ import { useWishlist } from '../../hooks/useWishlist';
 export const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
-  const {cartItems} = useCart();
-  const {items} = useWishlist()
+  const { cartItems } = useCart();
+  const { items } = useWishlist()
 
   const { user } = useAuth();
   const navigate = useNavigate();
-
+  const location = useLocation();
   const toggleMobileMenu = () => setMobileMenuOpen(!mobileMenuOpen);
   const toggleSearch = () => setShowSearch(!showSearch);
+
+  useEffect(() => {
+    setMobileMenuOpen(false);
+    setShowSearch(false);
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
 
   const handleLogout = async () => {
     try {
@@ -37,6 +43,20 @@ export const Navbar = () => {
       navigate('/login');
     } catch (error) {
       console.error('Error signing out:', error);
+    }
+  };
+
+  const [searchTerm, setSearchTerm] = useState("");
+  const handleSearch = () => {
+    if (searchTerm.trim) {
+      navigate(`/products/${searchTerm}`);
+
+    };
+  }
+
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      handleSearch();
     }
   };
 
@@ -61,7 +81,7 @@ export const Navbar = () => {
             <Link to="/cart" className="position-relative">
               <FaShoppingCart className="text-white" />
               <span className="badge bg-warning text-dark rounded-pill position-absolute top-0 start-100 translate-middle">
-                0
+                {cartItems.length}
               </span>
             </Link>
           </div>
@@ -71,7 +91,7 @@ export const Navbar = () => {
         <div className="d-none d-md-flex flex-wrap justify-content-between align-items-center gap-3">
           <div className="d-flex align-items-center gap-3">
             <Link to="/">
-              <img src={amazonLogo} alt="Amazon" className="desktop-logo" />
+              <img src={amazonLogo} alt="Amazon" className="desktop-logo ms-3 mt-1" />
             </Link>
             <div className="d-flex align-items-start">
               <FaMapMarkerAlt className="me-1 mt-1" />
@@ -84,13 +104,12 @@ export const Navbar = () => {
 
           <div className="search-bar flex-grow-1">
             <div className="input-group">
-              <select className="form-select rounded-start bg-light">
-                <option>All</option>
-                <option>Books</option>
-                <option>Electronics</option>
-              </select>
-              <input type="text" className="form-control" placeholder="Search Amazon" />
-              <button className="btn btn-warning rounded-end px-3">
+              <input type="text" className="form-control rounded-lg" placeholder="Search Amazon"
+                value={searchTerm}
+                onChange={(e) => { setSearchTerm(e.target.value) }}
+                onKeyDown={handleKeyPress} />
+              <button className="btn btn-warning rounded-end px-3"
+                onClick={handleSearch}>
                 <FaSearch />
               </button>
             </div>
@@ -111,7 +130,7 @@ export const Navbar = () => {
               </button>
               <ul className="dropdown-menu dropdown-menu-end">
                 <li><Link to="/profile" className="dropdown-item">Your Profile</Link></li>
-                <li><Link to="/orders" className="dropdown-item">Your Orders</Link></li>
+                <li><Link to="/cart" className="dropdown-item">Your Orders</Link></li>
                 <li><hr className="dropdown-divider" /></li>
                 <li>
                   <button className="dropdown-item text-danger" onClick={handleLogout}>
@@ -147,40 +166,21 @@ export const Navbar = () => {
         {showSearch && (
           <div className="mobile-search-bar mt-2 d-md-none">
             <div className="input-group">
-              <select className="form-select bg-light">
-                <option>All</option>
-                <option>Books</option>
-                <option>Electronics</option>
-              </select>
-              <input type="text" className="form-control" placeholder="Search Amazon" />
-              <button className="btn btn-warning">
+              <input type="text" className="form-control rounded-lg" placeholder="Search Amazon"
+                value={searchTerm}
+                onChange={(e) => { setSearchTerm(e.target.value) }}
+                onKeyDown={handleKeyPress} />
+              <button className="btn btn-warning rounded-end px-3"
+                onClick={handleSearch}>
                 <FaSearch />
               </button>
+
             </div>
           </div>
         )}
       </div>
 
-      {/* Bottom Navbar */}
-      <div className="bottom-navbar bg-secondary text-white d-none d-md-block">
-        <div className="container-fluid">
-          <div className="d-flex flex-wrap align-items-center gap-3">
-            <span className="d-flex align-items-center gap-1 fw-bold">
-              <FaBars />
-              All
-            </span>
-            <Link to="#" className="nav-link">Amazon miniTV</Link>
-            <Link to="#" className="nav-link">Sell</Link>
-            <Link to="#" className="nav-link">Best Sellers</Link>
-            <Link to="#" className="nav-link">Today's Deals</Link>
-            <Link to="#" className="nav-link">Mobiles</Link>
-            <Link to="#" className="nav-link">Customer Service</Link>
-            <Link to="#" className="nav-link">Prime ▾</Link>
-            <Link to="#" className="nav-link">Electronics</Link>
-            <Link to="#" className="nav-link">Fashion</Link>
-          </div>
-        </div>
-      </div>
+
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (

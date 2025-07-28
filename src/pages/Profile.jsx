@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container, Row, Col, Card, Button, Spinner } from 'react-bootstrap';
-import { useAuth } from '../services/context/AuthContext'; // Adjust the path if needed
+import { useAuth } from '../services/context/AuthContext';
 import { signOut } from 'firebase/auth';
 import { auth } from '../services/firebase';
 import { useNavigate } from 'react-router-dom';
@@ -38,7 +38,7 @@ const ProfilePage = () => {
           <Card className="shadow-lg">
             <Card.Body className="text-center">
               <img
-                src={'https://via.placeholder.com/https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS1d6bZKVnTbXECD_HyQKxlmps5AWjjQkxyZA&s'}
+                src={'https://avatar.iran.liara.run/public/20'}
                 alt="Profile"
                 className="rounded-circle mb-3"
                 style={{ width: '120px', height: '120px', objectFit: 'cover' }}
@@ -46,9 +46,6 @@ const ProfilePage = () => {
               <h4>{user.displayName || 'No name provided'}</h4>
               <p className="text-muted">{user.email}</p>
               <div className="d-flex justify-content-center gap-3 mt-3">
-                <Button variant="primary" disabled>
-                  Edit Profile
-                </Button>
                 <Button variant="danger" onClick={handleLogout}>
                   Logout
                 </Button>
