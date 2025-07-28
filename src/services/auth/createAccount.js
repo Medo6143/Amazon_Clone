@@ -4,7 +4,7 @@ import {
     sendEmailVerification,
   } from 'firebase/auth';
   import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
-  import { auth, db } from '../firebase'; // <-- صحّح المسار
+  import { auth, db } from '../firebase'; 
   
   export async function createAccount({ name, email, password, verifyEmail = true }) {
     if (!name || !email || !password) {

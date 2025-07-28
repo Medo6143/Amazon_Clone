@@ -104,7 +104,7 @@ export default function LoginPage({ switchToCreate, prefillData }) {
           <p className="text-center small text-muted mb-2">New to Amazon?</p>
           <button
             type="button"
-            onClick={switchToCreate}
+            onClick={() => navigate("/register")}
             className="btn btn-light border w-100"
           >
             Create your Amazon account
