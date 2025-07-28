@@ -12,7 +12,7 @@ const cartSlice = createSlice({
       reducer(state, action) {
         const { id, price, quantity = 1 } = action.payload;
         const existingItem = state.items.find(item => item.id === id);
-        
+
         if (existingItem) {
           existingItem.quantity += quantity;
           existingItem.totalPrice += price * quantity;
@@ -23,7 +23,7 @@ const cartSlice = createSlice({
             totalPrice: price * quantity
           });
         }
-        
+
         state.totalQuantity += quantity;
         state.totalPrice += price * quantity;
       },
@@ -36,11 +36,11 @@ const cartSlice = createSlice({
         };
       }
     },
-    
+
     removeFromCart(state, action) {
       const id = action.payload;
       const existingItem = state.items.find(item => item.id === id);
-      
+
       if (existingItem) {
         if (existingItem.quantity > 1) {
           existingItem.quantity--;
@@ -54,31 +54,36 @@ const cartSlice = createSlice({
         }
       }
     },
-    
+
     removeItemCompletely(state, action) {
       const id = action.payload;
       const existingItem = state.items.find(item => item.id === id);
-      
+
       if (existingItem) {
         state.totalQuantity -= existingItem.quantity;
         state.totalPrice -= existingItem.totalPrice;
         state.items = state.items.filter(item => item.id !== id);
       }
     },
-    
+
     clearCart(state) {
       state.items = [];
       state.totalQuantity = 0;
       state.totalPrice = 0;
+    },
+    hydrateCart(state, action) {
+      return action.payload;
     }
+
   }
 });
 
-export const { 
-  addToCart, 
-  removeFromCart, 
-  removeItemCompletely, 
-  clearCart 
+export const {
+  addToCart,
+  removeFromCart,
+  removeItemCompletely,
+  clearCart,
+  hydrateCart 
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

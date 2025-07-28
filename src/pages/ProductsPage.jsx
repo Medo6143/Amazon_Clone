@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Row, Col, Card, Button, Form, Pagination, Badge } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar, faStarHalfAlt, faShoppingCart, faSearch, faFilter } from '@fortawesome/free-solid-svg-icons';
-import { useNavigate } from 'react-router-dom';
+import { faStar, faStarHalfAlt, faShoppingCart, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { Link, useParams } from 'react-router-dom';
+
+import { FaShoppingCart, FaMinus, FaPlus, FaTrashAlt, FaRegHeart, FaHeart } from 'react-icons/fa'
+
 import ProductCardSkeleton from '../components/ui/ProductCardSkeleton';
 import { useProducts } from '../hooks/useProducts';
 import { useCart } from '../hooks/useproductCart';
+import { useWishlist } from '../hooks/useWishlist';
 
 const ProductsPage = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -13,13 +17,26 @@ const ProductsPage = () => {
   const [productsPerPage] = useState(8);
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [selectedPrice, setSelectedPrice] = useState('all');
-  const navigate = useNavigate();
   const { products, loading, error } = useProducts();
-  const { addItemToCart } = useCart();
+  const {
+    addItemToCart,
+    decreaseItemQuantity,
+    removeItem,
+    getQuantity
+  } = useCart();
+
+  const { inWishlist, addItem, removeItem: removeWish } = useWishlist();
+
+  const { searchParam } = useParams()
+  useEffect(() => {
+    if (!searchParam) return;
+    setSearchTerm(searchParam);
+  }, [searchParam])
   useEffect(() => {
     if (error) console.error(error);
   }, [error]);
 
+  console.log(typeof products)
   // Filter products based on search term, category and price
   const filteredProducts = products.filter(product => {
     const matchesSearch = product.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -76,7 +93,7 @@ const ProductsPage = () => {
     <Container fluid className="py-4">
       {/* Search and Filter Section */}
       <Row className="mb-4">
-        <Col md={6}>
+        <Col md={6} className="mb-3 mb-md-0">
           <div className="input-group">
             <span className="input-group-text bg-white">
               <FontAwesomeIcon icon={faSearch} />
@@ -86,11 +103,9 @@ const ProductsPage = () => {
               placeholder="Search products..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
+
             />
-            <Button variant="warning">
-              <FontAwesomeIcon icon={faFilter} className="me-2" />
-              Filters
-            </Button>
+
           </div>
         </Col>
         <Col md={6} className="d-flex justify-content-end">
@@ -122,17 +137,18 @@ const ProductsPage = () => {
         {currentProducts.map((product) => (
           <Col key={product.id}>
             <Card className="h-100 shadow-sm">
-              <div
-                className="bg-light d-flex justify-content-center align-items-center"
-                style={{ height: '200px', cursor: 'pointer' }}
-                onClick={() => navigate(`/product/${product.id}`)}
-              >
-                <Card.Img
-                  variant="top"
-                  src={product.image}
-                  style={{ maxHeight: '100%', maxWidth: '100%', objectFit: 'contain' }}
-                />
-              </div>
+              <Link to={`/product/${product.id}`}>
+                <div
+                  className="bg-light d-flex justify-content-center align-items-center"
+                  style={{ height: '200px', cursor: 'pointer' }}
+                >
+                  <Card.Img
+                    variant="top"
+                    src={product.image}
+                    style={{ maxHeight: '100%', maxWidth: '100%', objectFit: 'contain' }}
+                  />
+                </div>
+              </Link>
               <Card.Body className="d-flex flex-column">
                 <Card.Title className="mb-2" style={{ fontSize: '1rem' }}>
                   {product.title.length > 50
@@ -145,10 +161,71 @@ const ProductsPage = () => {
                 </div>
                 <div className="mt-auto">
                   <h5 className="text-danger mb-3">${product.price}</h5>
-                  <Button variant="warning" className="w-100" onClick={() => addItemToCart(product)}>
-                    <FontAwesomeIcon icon={faShoppingCart} className="me-2" />
-                    Add to Cart
-                  </Button>
+
+                  {/* add to wishlist */}
+                  <div className="position-absolute top-0 end-0 p-2">
+                    {inWishlist(product.id) ? (
+                      <FaHeart
+                        size={20}
+                        color="#e74c3c"
+                        style={{ cursor: 'pointer' }}
+                        onClick={() => removeWish(product.id)}
+                      />
+                    ) : (
+                      <FaRegHeart
+                        size={20}
+                        color="#555"
+                        style={{ cursor: 'pointer' }}
+                        onClick={() => addItem(product)}
+                      />
+                    )}
+                  </div>
+                  {/* add button */}
+                  {getQuantity(product.id) === 0 ? (
+                    <Button
+                      variant="warning"
+                      className="w-100"
+                      onClick={() => addItemToCart(product)}
+                    >
+                      <FontAwesomeIcon icon={faShoppingCart} className="me-2" />
+                      Add to Cart
+                    </Button>
+                  ) : (
+                    <div className="d-flex align-items-center justify-content-between w-100">
+                      <div
+                        className="d-flex align-items-center border rounded-pill overflow-hidden"
+                        style={{ borderColor: '#e0e0e0' }}
+                      >
+                        <Button
+                          variant="light"
+                          className="px-3 py-2"
+                          onClick={() => decreaseItemQuantity(product.id)}
+                        >
+                          <FaMinus />
+                        </Button>
+
+                        <span className="px-3 py-2 fw-bold text-muted">
+                          {getQuantity(product.id)}
+                        </span>
+
+                        <Button
+                          variant="light"
+                          className="px-3 py-2"
+                          onClick={() => addItemToCart(product, 1)}
+                        >
+                          <FaPlus />
+                        </Button>
+                      </div>
+
+                      <Button
+                        variant="link"
+                        className="text-danger fw-bold text-decoration-none"
+                        onClick={() => removeItem(product.id)}
+                      >
+                        <FaTrashAlt className="me-1" /> Remove
+                      </Button>
+                    </div>
+                  )}
                 </div>
               </Card.Body>
               {product.price < 30 && (

@@ -1,23 +1,93 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { Navbar } from './components/layout/Navbar'
-import { Footer } from './components/layout/footer'
+import MainLayout from './layout/Mainlayout'
 import { Home } from './pages/Home'
+import WishlistPage from "./pages/WishlistPage"
 import CartPage from './pages/CartPage'
 import ProductsPage from './pages/ProductsPage'
+
+import ProductDetails from './pages/ProductDetails'
+
+import LoginPage from './pages/Login'
+import CreateAccount from './pages/Register'
+import ProtuctedRoute from './routes/ProtectedRoute'
+import ProfilePage from './pages/Profile'
+import NotFound from './pages/PagesNotFound'
+
 
 function App() {
   return (
     <>
-      <BrowserRouter>
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/cart" element={<CartPage />} />
-          <Route path="/products" element={<ProductsPage />} />
-          
-        </Routes>
-        <Footer />
-      </BrowserRouter>
+    <BrowserRouter>
+      <Routes>
+        {/* Public routes WITHOUT layout */}
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<CreateAccount />} />
+
+        {/* Routes WITH layout */}
+        <Route
+          path="/"
+          element={
+            <MainLayout>
+              <Home />
+            </MainLayout>
+          }
+        />
+        <Route
+          path="/products/:searchParam?"
+          element={
+            <MainLayout>
+              <ProductsPage />
+            </MainLayout>
+          }
+        />
+        <Route
+          path="/product/:id"
+          element={
+            <MainLayout>
+              <ProductDetails />
+            </MainLayout>
+          }
+        />
+        <Route
+          path="/cart"
+          element={
+            <ProtuctedRoute>
+              <MainLayout>
+                <CartPage />
+              </MainLayout>
+            </ProtuctedRoute>
+          }
+        />
+        <Route
+          path="/wishlist"
+          element={
+            <ProtuctedRoute>
+              <MainLayout>
+                <WishlistPage />
+              </MainLayout>
+            </ProtuctedRoute>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <ProtuctedRoute>
+              <MainLayout>
+                <ProfilePage />
+              </MainLayout>
+            </ProtuctedRoute>
+          }
+        />
+      <Route
+  path="*"
+  element={
+    <MainLayout>
+      <NotFound />
+    </MainLayout>
+  }
+/>
+      </Routes>
+    </BrowserRouter>
     </>
   )
 }
