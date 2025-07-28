@@ -1,5 +1,5 @@
 import React from "react";
-import '../../styles/ProductDetails.css'
+import '../../styles/productDetails.css'
 
 
 function Circle({pargraph, img, className}) {
