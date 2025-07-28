@@ -155,7 +155,7 @@ function ProductDetails() {
                         <h3 className="mb-4">More from {product.category}</h3>
                         <Row>
                             {relatedProducts.map(relatedProduct => (
-                                <Col key={relatedProduct.id} xs={12} sm={6} md={4} lg={3} className="mb-4">
+                                <Col key={relatedProduct.id} xs={12} sm={6} md={4} lg={3} className="mb-4" onClick={() => navigate(`/products/${relatedProduct.id}`)}>
                                     <Card className="h-100">
                                         <Card.Img
                                             variant="top"
