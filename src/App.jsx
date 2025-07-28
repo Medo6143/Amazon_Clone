@@ -11,6 +11,7 @@ import LoginPage from './pages/Login'
 import CreateAccount from './pages/Register'
 import ProtuctedRoute from './routes/ProtectedRoute'
 import ProfilePage from './pages/Profile'
+import NotFound from './pages/PagesNotFound'
 
 
 function App() {
@@ -77,6 +78,14 @@ function App() {
             </ProtuctedRoute>
           }
         />
+      <Route
+  path="*"
+  element={
+    <MainLayout>
+      <NotFound />
+    </MainLayout>
+  }
+/>
       </Routes>
     </BrowserRouter>
     </>

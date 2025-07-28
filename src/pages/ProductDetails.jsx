@@ -161,6 +161,7 @@ function ProductDetails() {
                     <div className="related-products mt-5">
                         <h3 className="mb-4">More from {product.category}</h3>
                         <Row>
+
                             {relatedProducts.map((product) => (
                                 <Col key={product.id}>
                                     <Card className="h-100 shadow-sm">
@@ -181,6 +182,19 @@ function ProductDetails() {
                                                 {product.title.length > 50
                                                     ? `${product.title.substring(0, 50)}...`
                                                     : product.title}
+
+                            {relatedProducts.map(relatedProduct => (
+                                <Col key={relatedProduct.id} xs={12} sm={6} md={4} lg={3} className="mb-4" onClick={() => navigate(`/products/${relatedProduct.id}`)}>
+                                    <Card className="h-100">
+                                        <Card.Img
+                                            variant="top"
+                                            src={relatedProduct.image}
+                                            style={{ height: '200px', objectFit: 'contain' }}
+                                        />
+                                        <Card.Body>
+                                            <Card.Title className="text-truncate">
+                                                {relatedProduct.title}
+
                                             </Card.Title>
                                             <div className="mb-2">
                                                 {renderRating(product.rating.rate)}
