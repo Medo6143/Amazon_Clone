@@ -23,7 +23,7 @@ export default function AutoSlider({title}) {
     if (loading) return <p>Loading slider...</p>;
 
   return (
-        <section className='my-4'>
+        <section className='mt-4 pb-4'>
             <div className="priv-container">
                 <div className="clothes-slider-content bg-white p-3">
                     <p>{title}</p>

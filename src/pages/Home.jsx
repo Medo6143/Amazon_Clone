@@ -7,7 +7,7 @@ import OfferSlider from '../components/sections/OfferSlider'
 
 export const Home = () => {
   return (
-    <>
+    <main className='home-body'>
       <div className="slider-container" style={{ position: 'relative' }}>
         <Slider />
         <Category />
@@ -19,6 +19,6 @@ export const Home = () => {
        
         <TrendingCategory />
         <OfferSlider />
-    </>
+    </main>
   )
 }
