@@ -33,7 +33,7 @@ function App() {
           }
         />
         <Route
-          path="/products"
+          path="/products/:searchParam?"
           element={
             <MainLayout>
               <ProductsPage />
@@ -41,7 +41,7 @@ function App() {
           }
         />
         <Route
-          path="/products/:id"
+          path="/product/:id"
           element={
             <MainLayout>
               <ProductDetails />

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Row, Col, Card, Button, Form, Pagination, Badge } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar, faStarHalfAlt, faShoppingCart, faSearch, faFilter } from '@fortawesome/free-solid-svg-icons';
-import { Link, useNavigate } from 'react-router-dom';
+import { faStar, faStarHalfAlt, faShoppingCart, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { Link, useParams } from 'react-router-dom';
 
-import { FaShoppingCart, FaMinus, FaPlus, FaTrashAlt, FaRegHeart, FaHeart  } from 'react-icons/fa'
+import { FaShoppingCart, FaMinus, FaPlus, FaTrashAlt, FaRegHeart, FaHeart } from 'react-icons/fa'
 
 import ProductCardSkeleton from '../components/ui/ProductCardSkeleton';
 import { useProducts } from '../hooks/useProducts';
@@ -17,7 +17,6 @@ const ProductsPage = () => {
   const [productsPerPage] = useState(8);
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [selectedPrice, setSelectedPrice] = useState('all');
-  const navigate = useNavigate();
   const { products, loading, error } = useProducts();
   const {
     addItemToCart,
@@ -28,11 +27,16 @@ const ProductsPage = () => {
 
   const { inWishlist, addItem, removeItem: removeWish } = useWishlist();
 
+  const { searchParam } = useParams()
+  useEffect(() => {
+    if (!searchParam) return;
+    setSearchTerm(searchParam);
+  }, [searchParam])
   useEffect(() => {
     if (error) console.error(error);
   }, [error]);
 
-    console.log(typeof products)
+  console.log(typeof products)
   // Filter products based on search term, category and price
   const filteredProducts = products.filter(product => {
     const matchesSearch = product.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -89,7 +93,7 @@ const ProductsPage = () => {
     <Container fluid className="py-4">
       {/* Search and Filter Section */}
       <Row className="mb-4">
-        <Col md={6}>
+        <Col md={6} className="mb-3 mb-md-0">
           <div className="input-group">
             <span className="input-group-text bg-white">
               <FontAwesomeIcon icon={faSearch} />
@@ -99,11 +103,9 @@ const ProductsPage = () => {
               placeholder="Search products..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
+
             />
-            <Button variant="warning">
-              <FontAwesomeIcon icon={faFilter} className="me-2" />
-              Filters
-            </Button>
+
           </div>
         </Col>
         <Col md={6} className="d-flex justify-content-end">
@@ -135,11 +137,10 @@ const ProductsPage = () => {
         {currentProducts.map((product) => (
           <Col key={product.id}>
             <Card className="h-100 shadow-sm">
-              <Link to={`/products/${product.id}`}>
+              <Link to={`/product/${product.id}`}>
                 <div
                   className="bg-light d-flex justify-content-center align-items-center"
                   style={{ height: '200px', cursor: 'pointer' }}
-                  onClick={() => navigate(`/product/${product.id}`)}
                 >
                   <Card.Img
                     variant="top"
@@ -160,7 +161,7 @@ const ProductsPage = () => {
                 </div>
                 <div className="mt-auto">
                   <h5 className="text-danger mb-3">${product.price}</h5>
-                  
+
                   {/* add to wishlist */}
                   <div className="position-absolute top-0 end-0 p-2">
                     {inWishlist(product.id) ? (
