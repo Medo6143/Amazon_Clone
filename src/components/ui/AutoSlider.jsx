@@ -18,7 +18,17 @@ export default function AutoSlider({ title }) {
         slidesToScroll: 1,
         autoplay: true,
         autoplaySpeed: 2000,
-        cssEase: "linear"
+        cssEase: 'linear',
+        responsive: [
+            {
+                breakpoint: 992,
+                settings: { slidesToShow: 3, slidesToScroll: 1 }
+            },
+            {
+                breakpoint: 576,
+                settings: { slidesToShow: 1, slidesToScroll: 1 }
+            }
+        ]
     };
 
     if (loading) return <p>Loading slider...</p>;
@@ -31,12 +41,14 @@ export default function AutoSlider({ title }) {
                     <SlickSlider {...settings}>
                         {sliderData.map((img, index) => (
                             <div key={index} >
-                                <img src={img.image}
+                                <img
+                                    src={img.image}
                                     className='me-4'
                                     alt={`slider ${index}`}
                                     loading='lazy'
-                                    style={{ cursor: 'pointer', height: 200 }}
-                                    onClick={() => navigate(`/product/${img.id}`)} />
+                                    style={{ cursor: 'pointer'}}
+                                    onClick={() => navigate(`/product/${img.id}`)}
+                                />
                             </div>
                         ))}
                     </SlickSlider>
