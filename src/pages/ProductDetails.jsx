@@ -70,8 +70,8 @@ function ProductDetails() {
                     <p>Products <FaAngleRight /> {product.category}</p>
                     <div className='row gap-3'>
                         <div className='col-sm-12 col-lg-5 col-xxl-5 images'>
-                            <img src={product.image} alt={product.title} className='img1' />
-                            <img src={product.image} alt={product.title} className='img2' />
+                            <img src={product.image} loading="lazy" alt={product.title} className='img1' />
+                            <img src={product.image} loading="lazy" alt={product.title} className='img2' />
                         </div>
 
                         <div className='col-sm-12 col-lg-6 col-xxl-4 rigth'>
@@ -160,11 +160,6 @@ function ProductDetails() {
                 {relatedProducts.length > 0 && (
                     <div className="related-products mt-5">
                         <h3 className="mb-4">More from {product.category}</h3>
-                        To make your React Bootstrap Row component mobile responsive, you can adjust the Col component's xs, sm, md, and lg props. This will control how many columns each product card takes up on different screen sizes.
-
-                        Here's how you can modify your code for better responsiveness, along with an explanation:
-
-                        JavaScript
 
                         <Row xs={1} sm={2} md={3} lg={4} className="g-4">
                             {relatedProducts.map((product) => (
@@ -178,6 +173,7 @@ function ProductDetails() {
                                                 <Card.Img
                                                     variant="top"
                                                     src={product.image}
+                                                    loading="lazy"
                                                     style={{ maxHeight: '100%', maxWidth: '100%', objectFit: 'contain' }}
                                                 />
                                             </div>

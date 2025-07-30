@@ -25,7 +25,7 @@ export default function useCategoryProducts() {
 
           if (i > 0) {
             productsRes.data.forEach((prod) => {
-              sliderImages.push({ image: prod.image }); 
+              sliderImages.push({ image: prod.image, id: prod.id }); 
             });
           }
         }

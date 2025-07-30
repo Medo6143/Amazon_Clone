@@ -1,6 +1,6 @@
 import React from 'react'
 import '../../styles/home.css';
-import SlickSlider  from "react-slick";
+import SlickSlider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import img1 from '../../assets/Slider Images/img1.jpg'
@@ -18,15 +18,15 @@ export default function Slider() {
 
     const images = [img1, img2, img3, img4, img5, img6]
 
-    const PrevArrow = ({onClick}) => (
+    const PrevArrow = ({ onClick }) => (
         <div className='custom-arrow prev-arrow' onClick={onClick}>
             <SlArrowLeft />
         </div>
     )
 
-    const NextArrow = ({onClick}) => (
+    const NextArrow = ({ onClick }) => (
         <div className='custom-arrow next-arrow' onClick={onClick}>
-            <SlArrowRight  className='test'/>
+            <SlArrowRight className='test' />
         </div>
     )
 
@@ -42,15 +42,18 @@ export default function Slider() {
         prevArrow: <PrevArrow />,
     };
 
-  return (
-    <section>
-        <SlickSlider {...settings}>
-            {images.map((img, index) => (
-                <div key={index} className='slider-img'>
-                    <img src={img} className='w-' alt="slider Image" />
-                </div>
-            ))}
-        </SlickSlider>
-    </section>
-  )
+    return (
+        <section>
+            <SlickSlider {...settings}>
+                {images.map((img, index) => (
+                    <div key={index} className='slider-img'>
+                        <img src={img} className='w-100'
+                            alt={`Slider Image ${index + 1}`}
+                            loading="lazy"
+                            style={{ objectFit: 'cover', height: '570px' }} />
+                    </div>
+                ))}
+            </SlickSlider>
+        </section>
+    )
 }
