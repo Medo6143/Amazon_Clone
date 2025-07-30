@@ -145,6 +145,7 @@ const ProductsPage = () => {
                   <Card.Img
                     variant="top"
                     src={product.image}
+                    loading="lazy"
                     style={{ maxHeight: '100%', maxWidth: '100%', objectFit: 'contain' }}
                   />
                 </div>

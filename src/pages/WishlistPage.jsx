@@ -15,7 +15,7 @@ export default function WishlistPage() {
                 {items.map(p => (
                     <Col key={p.id}>
                         <Card className="h-100">
-                            <Card.Img variant="top" src={p.image} style={{ objectFit: 'contain', height: 200 }} />
+                            <Card.Img variant="top" loading="lazy" src={p.image} style={{ objectFit: 'contain', height: 200 }} />
                             <Card.Body className="d-flex flex-column">
                                 <Card.Title style={{ fontSize: '1rem' }}>{p.title}</Card.Title>
                                 <h5 className="text-danger my-2">${p.price}</h5>

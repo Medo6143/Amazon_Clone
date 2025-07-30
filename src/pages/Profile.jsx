@@ -39,6 +39,7 @@ const ProfilePage = () => {
             <Card.Body className="text-center">
               <img
                 src={'https://avatar.iran.liara.run/public/20'}
+                loading="lazy"
                 alt="Profile"
                 className="rounded-circle mb-3"
                 style={{ width: '120px', height: '120px', objectFit: 'cover' }}

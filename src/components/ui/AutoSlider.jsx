@@ -6,8 +6,8 @@ import sock from '../../assets/sock.png';
 import useCategoryProducts from '../../hooks/useCategoryProducts';
 import { useNavigate } from 'react-router-dom';
 
-export default function AutoSlider({title}) {
-  const { sliderData, loading} = useCategoryProducts();
+export default function AutoSlider({ title }) {
+    const { sliderData, loading } = useCategoryProducts();
     const navigate = useNavigate();
     const settings = {
         dots: false,
@@ -23,7 +23,7 @@ export default function AutoSlider({title}) {
 
     if (loading) return <p>Loading slider...</p>;
 
-  return (
+    return (
         <section className='mt-4 pb-4'>
             <div className="priv-container">
                 <div className="clothes-slider-content bg-white p-3">
@@ -31,12 +31,17 @@ export default function AutoSlider({title}) {
                     <SlickSlider {...settings}>
                         {sliderData.map((img, index) => (
                             <div key={index} >
-                                <img src={img.image} className='me-4' alt={`slider ${index}`} />
+                                <img src={img.image}
+                                    className='me-4'
+                                    alt={`slider ${index}`}
+                                    loading='lazy'
+                                    style={{ cursor: 'pointer', height: 200 }}
+                                    onClick={() => navigate(`/product/${img.id}`)} />
                             </div>
                         ))}
                     </SlickSlider>
                 </div>
             </div>
         </section>
-  )
+    )
 }

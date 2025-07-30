@@ -12,7 +12,7 @@ export default function CartItem({
     <Row className="py-3 border-bottom cart-row">
       {/* image */}
       <Col xs={4} md={3}>
-        <img src={item.image} alt={item.title} className="img-fluid" />
+        <img src={item.image} loading="lazy" alt={item.title} className="img-fluid" />
       </Col>
 
       {/* details & controls */}
